@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import User from '../models/user.model';
 import HelpFuncs from '../utils/help_funcs';
 import bcrypt from 'bcrypt';
-
+import jwt from 'jsonwebtoken';
 
 export default {
     createUser: async (req: Request, res: Response) => {
@@ -46,7 +46,7 @@ export default {
             await newUser.save();
 
             // Send OTP to email    
-            
+            HelpFuncs.sendEmail(email, otp);
 
             return res.status(201).json({
                 status: true, 
@@ -63,7 +63,7 @@ export default {
         }
     }, 
     loginUser: async (req: Request, res: Response) => {
-        const {  email, password} = req.body;
+        const {  email, password } = req.body;
         if(!HelpFuncs.checkEmail(email)) {
             return res.status(400).json({
                 status: false, 
@@ -78,7 +78,11 @@ export default {
             })
         }
         try {
-            const user = await User.findOne({ email: email });  
+            const user = await User.findOne({ email: email },
+                { 
+                projection: { password: 0, otp: 0}
+            }
+            );  
             if(!user) {
                 return res.status(400).json({
                     status: false, 
@@ -97,7 +101,14 @@ export default {
 
 
             // generate token
-            
+            const userToken = jwt.sign({email: user.email, _id: user._id}, process.env.JWT_SECRET!, { expiresIn: '21d'});
+
+
+            res.status(200).json({
+                ...(user as any).doc, 
+                userToken
+            })
+
         } catch(err: any) {
             return res.status(500).json({
                 status: false, 

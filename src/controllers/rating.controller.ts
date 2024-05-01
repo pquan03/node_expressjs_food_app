@@ -41,7 +41,7 @@ export default {
     checkUserRating: async (req: IRequest, res: Response) => {
         const { ratingType, product} = req.body
         try {
-            const existingRating = await Rating.findOne({ userId: req.userId, ratingType, product})
+            const existingRating = await Rating.findOne({ userId: req.user._id, ratingType, product})
             if(existingRating) {
                 return res.status(200).json({ status: true, message: 'User has already rated this product'})   
             } 

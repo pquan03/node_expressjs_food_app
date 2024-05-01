@@ -14,15 +14,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Connect to database
 import './configs/database.config';
+import help_funcs from './utils/help_funcs';
 
 // Routes
 app.use('/api/category', routes.categoryRoute);
 app.use('/api/restaurant', routes.restaurantRoute);
 app.use('/api/food', routes.foodRoute);
 app.use('/api/rating', routes.ratingRoute);
+app.use('/api/auth', routes.authRoute);
+app.use('/api/user', routes.userRoute); 
 
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);
   });
+
