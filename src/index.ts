@@ -23,6 +23,8 @@ app.use('/api/food', routes.foodRoute);
 app.use('/api/rating', routes.ratingRoute);
 app.use('/api/auth', routes.authRoute);
 app.use('/api/user', routes.userRoute); 
+app.use('/api/address', routes.addressRoute);
+app.use('/api/cart', routes.cartRoute);
 
 
 const port = process.env.PORT || 5000;

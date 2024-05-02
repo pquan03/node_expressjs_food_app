@@ -1,14 +1,15 @@
 import express, { Router } from 'express';
 import userController from '../controllers/user.controller';
-const router: Router = express.Router();    
+import { verifyTokenAndAuthorization } from '../middlewares/verifyToken.middleware';
+const router: Router = express.Router();
 
 router.route('/')
-    .get(userController.getUser)
-    .delete(userController.deleteUser)
+    .get(verifyTokenAndAuthorization, userController.getUser)
+    .delete(verifyTokenAndAuthorization, userController.deleteUser)
 
-router.get('/verify/:otp', userController.verifyAccount)
+router.get('/verify/:otp', verifyTokenAndAuthorization, userController.verifyAccount)
 
-router.get('/verify_phone/:phone', userController.verifyPhone)
+router.get('/verify_phone/:phone', verifyTokenAndAuthorization, userController.verifyPhone)
 
 
 export default router;

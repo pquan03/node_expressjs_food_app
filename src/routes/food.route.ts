@@ -1,10 +1,10 @@
 import express, { Router } from 'express';
 import foodController from '../controllers/food.controller';
-
+import { verifyVendor } from '../middlewares/verifyToken.middleware';
 const router: Router = express.Router();
 
 
-router.post('/', foodController.addFood)
+router.post('/', verifyVendor, foodController.addFood)
 
 router.get('/:id', foodController.getFoodById)
 
