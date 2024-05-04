@@ -1,4 +1,3 @@
-import { text } from 'body-parser';
 import nodemailer from 'nodemailer';
 
 

@@ -81,14 +81,15 @@ export default {
                 restaurants = await Restaurant.aggregate([
                     { $match: { code, isAvailable: true}}, 
                     { $sample: { size: 5}},
-                    {$project: { _v: 0}},
+                    {$project: { __v: 0}},
                 ])
             }
 
             if(restaurants.length === 0) {
                 restaurants = await Restaurant.aggregate([
                     { $match: { isAvailable: true}}, 
-                    {$project: { _v: 0}},
+                    { $sample: { size: 5}},
+                    {$project: { __v: 0}},
                 ])
             }
 

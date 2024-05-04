@@ -12,7 +12,7 @@ router.get('/search/:query', foodController.searchFood)
 
 router.get('/:category/:code', foodController.getFoodsByCategoryAndCode)
 
-router.get('/recommnendation/:code', foodController.getRandomFoods)
+router.get('/reconmendation/:code', foodController.getRandomFoods)
 
 
 router.get('/restaurant-foods/:id', foodController.getFoodsByRestaurant)

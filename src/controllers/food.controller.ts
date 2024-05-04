@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import Food from '../models/food.model';
+import { log } from 'console';
 
 export default {
     addFood: async (req: Request, res: Response) => {
@@ -33,20 +34,22 @@ export default {
     }, 
     getRandomFoods: async (req: Request, res: Response) => {
         const { code } = req.params;
+        console.log("Code: ", code);
         try {
             let foods = [];
             if(code) {
                 foods = await Food.aggregate([
-                    { $match: { code, isAvailable: true } },
+                    { $match: { code: code, isAvailable: true } },
                     { $sample: { size: 5 } },
-                    { $project: { _v: 0 } }
+                    { $project: { __v: 0 } }
                 ])
             }
-
+            
             if(foods.length === 0) {
                 foods = await Food.aggregate([
                     { $match: { isAvailable: true } },
-                    { $project: { _v: 0 } }
+                    { $sample: { size: 5 } },
+                    { $project: { __v: 0 } }
                 ])
             }
             res.status(200).json(foods)

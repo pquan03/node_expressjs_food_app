@@ -6,6 +6,7 @@ import authRoute from './auth.route';
 import userRoute from './user.route';
 import addressRoute from './address.route';
 import cartRoute from './cart.route';
+import orderRoute from './order.route';
 const routes = {
     categoryRoute,
     restaurantRoute, 
@@ -15,6 +16,7 @@ const routes = {
     userRoute,
     addressRoute,
     cartRoute, 
+    orderRoute,
 }
 
 export default routes;

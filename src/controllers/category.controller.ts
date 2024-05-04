@@ -34,7 +34,7 @@ export default {
         try {
             const categories = await Category.aggregate([
                 { $match: { title: { $ne: "More" } } },
-                { $sample: { size: 4 } },
+                { $sample: { size: 6 } },
             ])
             const moreCategory = await Category.findOne({ value: "more" }, {_v:0})
             
