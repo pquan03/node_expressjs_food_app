@@ -33,8 +33,9 @@ export default {
         }
     }, 
     getRandomFoods: async (req: Request, res: Response) => {
+        
         const { code } = req.params;
-        console.log("Code: ", code);
+        console.log(req.body);
         try {
             let foods = [];
             if(code) {
@@ -53,10 +54,20 @@ export default {
                 ])
             }
             res.status(200).json(foods)
+
         } catch(err: any) {
             res.status(500).json({status: false, message: err.message})
         }
     }, 
+    getAllFoodsByCode: async (req: Request, res: Response) => {
+        const { code } = req.params;
+        try {
+            const foods = await Food.find({ code, isAvailable: true });
+            res.status(200).json(foods)
+        } catch(err: any) {
+            res.status(500).json({status: false, message: err.message})
+        }
+    },
     getFoodsByRestaurant: async (req: Request, res: Response) => {
         const { id } = req.params;
         try {

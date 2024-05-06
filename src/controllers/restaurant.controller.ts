@@ -75,9 +75,12 @@ export default {
     },
     getAllNearbyRestaurants: async (req: Request, res: Response) => {
         const { code } = req.params;
+        console.log(req.params);
+        
         try {
             let restaurants = [];
             if(code) {
+                console.log('Request in here');
                 restaurants = await Restaurant.aggregate([
                     { $match: { code, isAvailable: true}}, 
                     { $sample: { size: 5}},
@@ -86,6 +89,7 @@ export default {
             }
 
             if(restaurants.length === 0) {
+                console.log('Request in here');
                 restaurants = await Restaurant.aggregate([
                     { $match: { isAvailable: true}}, 
                     { $sample: { size: 5}},
